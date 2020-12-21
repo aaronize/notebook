@@ -72,6 +72,28 @@ MySQL整体逻辑架构可以分为连接层、服务层和存储引擎层，如
 
 
 
+#### 案例分析一：普通索引的间隙锁
+
+```sql
+-- 创建 test1 表
+CREATE TABLE `test1` (
+	`id` 	int(11)		NOT NULL AUTO_INCREMENT,
+    `number` int(11)	 NOT NULL COMMENT '数字',
+    PRIMARY KEY (`id`),
+    KEY `number` (`number`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- 插入如下数据
+INSERT INTO `test1` VALUES (1, 1);
+INSERT INTO `test1` VALUES (5, 3);
+INSERT INTO `test1` VALUES (7, 8);
+INSERT INTO `test1` VALUES (11, 12);
+```
+
+
+
+
+
 ## 四、存储引擎
 
 ### 4.1 InnoDB
@@ -140,3 +162,4 @@ MySQL整体逻辑架构可以分为连接层、服务层和存储引擎层，如
 
 ## 参考
 
+[1] [MySQL InnoDB 多版本并发控制（MVCC）机制的原理及实现](https://zhuanlan.zhihu.com/p/64576887)
